@@ -66,11 +66,11 @@ public class FilmDAOImpl implements FilmDAO {
 
 	@Override
 	public List<Film> findByExample(Film example) throws Exception {
-		
+
 		Map<String, Object> paramaterMap = new HashMap<String, Object>();
 		List<String> whereClauses = new ArrayList<String>();
 
-		StringBuilder queryBuilder = new StringBuilder("select f from Film f where f.id = f.id ");
+		StringBuilder queryBuilder = new StringBuilder("select f from Film f where f.id = f.id");
 
 		if (StringUtils.isNotBlank(example.getTitolo())) {
 			whereClauses.add(" f.titolo  like :titolo ");
@@ -80,20 +80,20 @@ public class FilmDAOImpl implements FilmDAO {
 			whereClauses.add(" f.genere like :genere ");
 			paramaterMap.put("genere", "%" + example.getGenere() + "%");
 		}
-		if (StringUtils.isNotBlank(example.getMinutiDurata().toString())) {
-			whereClauses.add(" f.minutidurata like :minutiDurata ");
-			paramaterMap.put("minutiDurata", "%" + example.getMinutiDurata() + "%");
+		if ((example.getMinutiDurata()) != null) {
+			whereClauses.add(" f.minutiDurata >= :minutiDurata ");
+			paramaterMap.put("minutiDurata", example.getMinutiDurata());
 		}
 		if (example.getRegista() != null) {
-			whereClauses.add(" f.regista = :regista ");
+			whereClauses.add(" f.regista =:regista ");
 			paramaterMap.put("regista", example.getRegista());
 		}
 		if (example.getDataPubblicazione() != null) {
 			whereClauses.add("f.dataPubblicazione >= :dataPubblicazione ");
 			paramaterMap.put("dataPubblicazione", example.getDataPubblicazione());
 		}
-		
-		queryBuilder.append(!whereClauses.isEmpty()?" and ":"");
+
+		queryBuilder.append(!whereClauses.isEmpty() ? " and " : "");
 		queryBuilder.append(StringUtils.join(whereClauses, " and "));
 		TypedQuery<Film> typedQuery = entityManager.createQuery(queryBuilder.toString(), Film.class);
 

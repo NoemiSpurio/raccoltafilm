@@ -22,13 +22,10 @@ import it.prova.raccoltafilm.utility.UtilityForm;
 public class ExecuteSearchFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	// injection del Service
 	private FilmService filmService;
-	private RegistaService registaService;
 
 	public ExecuteSearchFilmServlet() {
 		this.filmService = MyServiceFactory.getFilmServiceInstance();
-		this.registaService = MyServiceFactory.getRegistaServiceInstance();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,18 +37,20 @@ public class ExecuteSearchFilmServlet extends HttpServlet {
 		String minutiDurataParam = request.getParameter("minutiDurata");
 		String registaIdParam = request.getParameter("regista.id");
 
-		Film example = UtilityForm.createFilmFromParams(titoloParam, genereParam, minutiDurataParam,
+		Film filmInstance = UtilityForm.createFilmFromParams(titoloParam, genereParam, minutiDurataParam,
 				dataPubblicazioneParam, registaIdParam);
 
 		try {
-			request.setAttribute("film_list_attribute", filmService.findByExample(example));
+			request.setAttribute("film_list_attribute", filmService.findByExample(filmInstance));
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
 			request.getRequestDispatcher("/film/search.jsp").forward(request, response);
 			return;
 		}
-		request.getRequestDispatcher("/film/list.jsp").forward(request, response);
+
+		request.getRequestDispatcher("film/list.jsp").forward(request, response);
+		
 	}
 
 }

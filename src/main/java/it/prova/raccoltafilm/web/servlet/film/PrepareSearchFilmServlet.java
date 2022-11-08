@@ -15,7 +15,6 @@ import it.prova.raccoltafilm.service.RegistaService;
 public class PrepareSearchFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	// injection del Service
 	private RegistaService registaService;
 
 	public PrepareSearchFilmServlet() {
@@ -26,7 +25,6 @@ public class PrepareSearchFilmServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			// questo mi serve per la select di registi in pagina
 			request.setAttribute("registi_list_attribute", registaService.listAllElements());
 		} catch (Exception e) {
 			e.printStackTrace();
