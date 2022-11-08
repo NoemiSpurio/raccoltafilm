@@ -22,6 +22,14 @@ import it.prova.raccoltafilm.service.RegistaService;
 public class PrepareUpdateFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private FilmService filmService;
+	private RegistaService registaService;
+
+	public PrepareUpdateFilmServlet() {
+		this.filmService = MyServiceFactory.getFilmServiceInstance();
+		this.registaService = MyServiceFactory.getRegistaServiceInstance();
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String idDaModificare = request.getParameter("idFilm");
@@ -32,8 +40,8 @@ public class PrepareUpdateFilmServlet extends HttpServlet {
 			return;
 		}
 		
-		FilmService filmService = MyServiceFactory.getFilmServiceInstance();
-		RegistaService registaService = MyServiceFactory.getRegistaServiceInstance();
+		// FilmService filmService = MyServiceFactory.getFilmServiceInstance();
+		// RegistaService registaService = MyServiceFactory.getRegistaServiceInstance();
 		Film result = new Film();
 		try {
 			result = filmService.caricaSingoloElementoEager(Long.parseLong(idDaModificare));

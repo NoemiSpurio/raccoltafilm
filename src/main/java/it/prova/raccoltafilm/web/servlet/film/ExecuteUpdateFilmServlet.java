@@ -22,6 +22,14 @@ import it.prova.raccoltafilm.utility.UtilityForm;
 public class ExecuteUpdateFilmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private FilmService filmService;
+	private RegistaService registaService;
+
+	public ExecuteUpdateFilmServlet() {
+		this.filmService = MyServiceFactory.getFilmServiceInstance();
+		this.registaService = MyServiceFactory.getRegistaServiceInstance();
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String titoloParam = request.getParameter("titolo");
@@ -42,8 +50,8 @@ public class ExecuteUpdateFilmServlet extends HttpServlet {
 				dataPubblicazioneParam, registaIdParam);
 		filmInstance.setId(Long.parseLong(idFilmParam));
 
-		FilmService filmService = MyServiceFactory.getFilmServiceInstance();
-		RegistaService registaService = MyServiceFactory.getRegistaServiceInstance();
+		// FilmService filmService = MyServiceFactory.getFilmServiceInstance();
+		// RegistaService registaService = MyServiceFactory.getRegistaServiceInstance();
 		try {
 			if (!UtilityForm.validateFilmBean(filmInstance)) {
 				request.setAttribute("insert_film_attr", filmInstance);
