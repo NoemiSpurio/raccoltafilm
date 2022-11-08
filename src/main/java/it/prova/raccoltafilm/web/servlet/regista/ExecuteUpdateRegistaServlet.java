@@ -1,63 +1,69 @@
 package it.prova.raccoltafilm.web.servlet.regista;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import it.prova.raccoltafilm.model.Regista;
 import it.prova.raccoltafilm.service.MyServiceFactory;
 import it.prova.raccoltafilm.service.RegistaService;
 import it.prova.raccoltafilm.utility.UtilityForm;
 
-@WebServlet("/ExecuteInsertRegistaServlet")
-public class ExecuteInsertRegistaServlet extends HttpServlet {
+/**
+ * Servlet implementation class ExecuteUpdateRegistaServlet
+ */
+@WebServlet("/ExecuteUpdateRegistaServlet")
+public class ExecuteUpdateRegistaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	private RegistaService registaService;
 
-	public ExecuteInsertRegistaServlet() {
+	public ExecuteUpdateRegistaServlet() {
 		this.registaService = MyServiceFactory.getRegistaServiceInstance();
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// estraggo input
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		String nomeParam = request.getParameter("nome");
 		String cognomeParam = request.getParameter("cognome");
 		String nickNameParam = request.getParameter("nickName");
 		String dataDiNascitaParam = request.getParameter("dataDiNascita");
 		String sessoParam = request.getParameter("sesso");
 		
-		Regista registaInstance = UtilityForm.createRegistaFromParams(nomeParam, cognomeParam, nickNameParam,
-				dataDiNascitaParam, sessoParam);
+		String idRegistaParam = request.getParameter("idRegista");
 
-		if (!UtilityForm.validateRegistaBean(registaInstance)) {
-			request.setAttribute("insert_regista_attr", registaInstance);
-			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
-			request.getRequestDispatcher("/regista/insert.jsp").forward(request, response);
+		if (!NumberUtils.isCreatable(idRegistaParam)) {
+			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
+			request.getRequestDispatcher("home").forward(request, response);
 			return;
 		}
 
-		// se sono qui i valori sono ok quindi posso creare l'oggetto da inserire
-		// occupiamoci delle operazioni di business
+		Regista registaInstance = UtilityForm.createRegistaFromParams(nomeParam, cognomeParam, nickNameParam,
+				dataDiNascitaParam, sessoParam);
+		registaInstance.setId(Long.parseLong(idRegistaParam));
+
+		if (!UtilityForm.validateRegistaBean(registaInstance)) {
+			request.setAttribute("dettaglioRegistaDaModificare", registaInstance);
+			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
+			request.getRequestDispatcher("/regista/update.jsp").forward(request, response);
+			return;
+		}
 		try {
-			registaService.inserisciNuovo(registaInstance);
+			registaService.aggiorna(registaInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
-			request.getRequestDispatcher("/regista/insert.jsp").forward(request, response);
+			request.getRequestDispatcher("/regista/update.jsp").forward(request, response);
 			return;
 		}
 
-		// andiamo ai risultati
-		// uso il sendRedirect con parametro per evitare il problema del double save on
-		// refresh
 		response.sendRedirect("ExecuteListRegistaServlet?operationResult=SUCCESS");
-
 	}
 
 }

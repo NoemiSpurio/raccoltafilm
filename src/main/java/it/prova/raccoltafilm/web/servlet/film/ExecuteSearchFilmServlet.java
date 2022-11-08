@@ -40,10 +40,8 @@ public class ExecuteSearchFilmServlet extends HttpServlet {
 		String minutiDurataParam = request.getParameter("minutiDurata");
 		String registaIdParam = request.getParameter("regista.id");
 
-		int minutiParsed = NumberUtils.isCreatable(minutiDurataParam) ? Integer.parseInt(minutiDurataParam) : 0;
-
-		Film example = new Film(titoloParam, genereParam, UtilityForm.parseDateArrivoFromString(dataPubblicazioneParam),
-				minutiParsed);
+		Film example = UtilityForm.createFilmFromParams(titoloParam, genereParam, minutiDurataParam,
+				dataPubblicazioneParam, registaIdParam);
 
 		try {
 			request.setAttribute("film_list_attribute", filmService.findByExample(example));
