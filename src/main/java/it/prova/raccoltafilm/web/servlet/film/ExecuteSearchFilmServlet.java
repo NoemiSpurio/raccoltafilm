@@ -1,6 +1,7 @@
 package it.prova.raccoltafilm.web.servlet.film;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,9 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import it.prova.raccoltafilm.model.Film;
+import it.prova.raccoltafilm.model.Regista;
 import it.prova.raccoltafilm.service.FilmService;
 import it.prova.raccoltafilm.service.MyServiceFactory;
+import it.prova.raccoltafilm.service.RegistaService;
+import it.prova.raccoltafilm.utility.UtilityForm;
 
 @WebServlet("/ExecuteSearchFilmServlet")
 public class ExecuteSearchFilmServlet extends HttpServlet {
@@ -18,16 +24,26 @@ public class ExecuteSearchFilmServlet extends HttpServlet {
 
 	// injection del Service
 	private FilmService filmService;
+	private RegistaService registaService;
 
 	public ExecuteSearchFilmServlet() {
 		this.filmService = MyServiceFactory.getFilmServiceInstance();
+		this.registaService = MyServiceFactory.getRegistaServiceInstance();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// da implementare
-		Film example = new Film();
+		String titoloParam = request.getParameter("titolo");
+		String genereParam = request.getParameter("genere");
+		String dataPubblicazioneParam = request.getParameter("dataPubblicazione");
+		String minutiDurataParam = request.getParameter("minutiDurata");
+		String registaIdParam = request.getParameter("regista.id");
+
+		int minutiParsed = NumberUtils.isCreatable(minutiDurataParam) ? Integer.parseInt(minutiDurataParam) : 0;
+
+		Film example = new Film(titoloParam, genereParam, UtilityForm.parseDateArrivoFromString(dataPubblicazioneParam),
+				minutiParsed);
 
 		try {
 			request.setAttribute("film_list_attribute", filmService.findByExample(example));

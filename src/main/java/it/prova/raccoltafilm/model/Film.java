@@ -48,6 +48,15 @@ public class Film {
 		this.titolo = titolo;
 		this.genere = genere;
 	}
+	
+
+	public Film(String titolo, String genere, Date dataPubblicazione, Integer minutiDurata) {
+		super();
+		this.titolo = titolo;
+		this.genere = genere;
+		this.dataPubblicazione = dataPubblicazione;
+		this.minutiDurata = minutiDurata;
+	}
 
 	public Long getId() {
 		return id;
