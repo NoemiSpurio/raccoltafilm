@@ -19,7 +19,8 @@
 				    <div class='card-header'>
 				        <h5>Lista dei risultati</h5> 
 				    </div>
-				    <div class='card-body'>				    
+				    <div class='card-body'>	
+				    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/admin/PrepareInsertUtenteServlet">Aggiungi utente</a>			    
 				        <div class='table-responsive'>
 				            <table class='table table-striped ' >
 				                <thead>
