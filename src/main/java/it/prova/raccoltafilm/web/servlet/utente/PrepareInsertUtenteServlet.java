@@ -1,6 +1,9 @@
 package it.prova.raccoltafilm.web.servlet.utente;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +30,7 @@ public class PrepareInsertUtenteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			request.setAttribute("ruoli_list_attribute", ruoloService.listAll());
+			request.setAttribute("ruoli_assegnati", new ArrayList<>());
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");

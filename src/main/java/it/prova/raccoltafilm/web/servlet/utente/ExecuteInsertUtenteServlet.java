@@ -71,7 +71,11 @@ public class ExecuteInsertUtenteServlet extends HttpServlet {
 			if (!UtilityForm.validateUtenteBean(utenteInstance) || !passwordParam.equals(confermaPwdParam)) {
 				request.setAttribute("insert_utente_attr", utenteInstance);
 				request.setAttribute("ruoli_list_attribute", ruoloService.listAll());
-				request.setAttribute("ruoli_assegnati", ruoliUtente);
+				List<Long> idRuoli = new ArrayList<>();
+				for (Ruolo ruolo : ruoliUtente) {
+					idRuoli.add(ruolo.getId());
+				}
+				request.setAttribute("ruoli_assegnati", idRuoli);
 				request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
 				request.getRequestDispatcher("/utente/insert.jsp").forward(request, response);
 				return;

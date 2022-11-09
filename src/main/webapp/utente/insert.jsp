@@ -57,10 +57,10 @@
 								</div>
 								
 								<div class="col-md-6">
-									<label for="ruoli" class="form-label">Ruoli<span class="text-danger">*</label>
+									<label for="ruoli" class="form-label">Ruoli<span class="text-danger">*</span></label>
 									<c:forEach items="${ruoli_list_attribute}" var="ruoloItem">
 										<div class="form-check">
-  											<input class="form-check-input" type="checkbox" value="${ruoloItem.id}" id="flexCheckDefault" name="ruoli">
+  											<input class="form-check-input" type="checkbox" value="${ruoloItem.id}" id="flexCheckDefault" name="ruoli" <c:if test="${ruoli_assegnati.contains(ruoloItem.id)}">checked="checked"</c:if>>
   											<label class="form-check-label" for="flexCheckDefault">${ruoloItem}</label>
 										</div>
 									</c:forEach>
