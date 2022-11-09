@@ -10,6 +10,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import it.prova.raccoltafilm.model.Film;
 import it.prova.raccoltafilm.model.Regista;
 import it.prova.raccoltafilm.model.Sesso;
+import it.prova.raccoltafilm.model.Utente;
 
 public class UtilityForm {
 
@@ -20,6 +21,24 @@ public class UtilityForm {
 		result.setSesso(StringUtils.isBlank(sessoParam)?null:Sesso.valueOf(sessoParam));
 		result.setDataDiNascita(parseDateArrivoFromString(dataDiNascitaStringParam));
 		return result;
+	}
+	
+	public static Utente createUtenteFromParams(String nomeInputParam, String cognomeInputParam,
+			String usernameInputParam, String dateCreatedStringParam) {
+
+		Utente result = new Utente(usernameInputParam, nomeInputParam, cognomeInputParam);
+		result.setDateCreated(parseDateArrivoFromString(dateCreatedStringParam));
+		return result;
+	}
+	
+	public static boolean validateUtenteBean(Utente utenteToBeValidated) {
+		if (StringUtils.isBlank(utenteToBeValidated.getNome())
+				|| StringUtils.isBlank(utenteToBeValidated.getCognome())
+				|| StringUtils.isBlank(utenteToBeValidated.getUsername()) 
+				|| utenteToBeValidated.getDateCreated() == null) {
+			return false;
+		}
+		return true;
 	}
 
 	public static boolean validateRegistaBean(Regista registaToBeValidated) {
