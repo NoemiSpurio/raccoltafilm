@@ -35,7 +35,8 @@ public class UtilityForm {
 		if (StringUtils.isBlank(utenteToBeValidated.getNome()) || StringUtils.isBlank(utenteToBeValidated.getCognome())
 				|| StringUtils.isBlank(utenteToBeValidated.getUsername())
 				|| utenteToBeValidated.getDateCreated() == null
-				|| StringUtils.isBlank(utenteToBeValidated.getPassword())) {
+				|| StringUtils.isBlank(utenteToBeValidated.getPassword())
+				|| utenteToBeValidated.getRuoli().size() == 0) {
 			return false;
 		}
 		return true;

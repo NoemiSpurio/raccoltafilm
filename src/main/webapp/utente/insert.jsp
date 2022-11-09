@@ -38,12 +38,12 @@
 								
 								<div class="col-md-6">
 									<label for="password" class="form-label">Password<span class="text-danger">*</span></label>
-									<input type="text" name="password" id="password" class="form-control" placeholder="Inserire la password">
+									<input type="password" name="password" id="password" class="form-control" placeholder="Inserire la password">
 								</div>
 							
 								<div class="col-md-6">
 									<label for="passwordConferma" class="form-label">Conferma password<span class="text-danger">*</span></label>
-									<input type="text" name="passwordConferma" id="passwordConferma" class="form-control" placeholder="Inserire nuovamente la password">
+									<input type="password" name="passwordConferma" id="passwordConferma" class="form-control" placeholder="Inserire nuovamente la password">
 								</div>
 								
 								<div class="col-md-6">
@@ -60,10 +60,10 @@
 									<label for="ruoli" class="form-label">Ruoli<span class="text-danger">*</label>
 									<c:forEach items="${ruoli_list_attribute}" var="ruoloItem">
 										<div class="form-check">
-  											<input class="form-check-input" type="checkbox" value="${ruoloItem.id}" id="flexCheckDefault">
+  											<input class="form-check-input" type="checkbox" value="${ruoloItem.id}" id="flexCheckDefault" name="ruoli">
   											<label class="form-check-label" for="flexCheckDefault">${ruoloItem}</label>
 										</div>
-								</c:forEach>
+									</c:forEach>
 								</div>
 								
 								<div class="col-12">
