@@ -3,6 +3,7 @@ package it.prova.raccoltafilm.dao;
 import java.util.List;
 import java.util.Optional;
 
+import it.prova.raccoltafilm.model.Film;
 import it.prova.raccoltafilm.model.Ruolo;
 import it.prova.raccoltafilm.model.Utente;
 
@@ -15,5 +16,7 @@ public interface UtenteDAO extends IBaseDAO<Utente> {
 	public Optional<Utente> login(String username, String password) throws Exception;
 	
 	public List<Utente> findByExample(Utente example) throws Exception;
+	
+	public Optional<Utente> findOneEager(Long id) throws Exception;
 
 }

@@ -3,6 +3,7 @@ package it.prova.raccoltafilm.service;
 import java.util.List;
 
 import it.prova.raccoltafilm.dao.UtenteDAO;
+import it.prova.raccoltafilm.model.Film;
 import it.prova.raccoltafilm.model.Ruolo;
 import it.prova.raccoltafilm.model.Utente;
 
@@ -28,5 +29,7 @@ public interface UtenteService  {
 	public void setUtenteDAO(UtenteDAO utenteDAO);
 	
 	public List<Utente> findByExample(Utente example) throws Exception;
+	
+	public Utente caricaSingoloElementoEager(Long id) throws Exception;
 
 }

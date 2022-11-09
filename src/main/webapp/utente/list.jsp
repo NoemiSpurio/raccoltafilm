@@ -28,6 +28,7 @@
 				                        <th>Cognome</th>
 				                        <th>Username</th>
 				                        <th>Data di creazione</th>
+				                        <th>Azioni</th>
 				                    </tr>
 				                </thead>
 				                <tbody>
@@ -37,6 +38,9 @@
 											<td>${utenteItem.cognome}</td>
 											<td>${utenteItem.username}</td>
 											<td><fmt:formatDate type = "date" value = "${utenteItem.dateCreated}" /></td>
+											<td>
+												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/admin/ExecuteShowUtenteServlet?idUtente=${utenteItem.id }">Visualizza</a>
+											</td>
 										</tr>
 									</c:forEach>
 				                </tbody>
